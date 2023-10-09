@@ -90,15 +90,23 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const Divider(),
-            Consumer<Deck>(
+            Expanded(child: Consumer<Deck>(
               builder: (context, deck, child) {
                 List<Image> images = [];
                 for (var card in deck.cards) {
-                  images.add(Image.network(card.imageURL));
+                  images.add(Image.network(card.imageURL, fit: BoxFit.scaleDown,));
                 }
-                return Column(children: images);
+                return ConstrainedBox(
+                  constraints: const BoxConstraints(
+                      minWidth: 400,
+                      maxWidth: 500,
+                      minHeight: 600,
+                      maxHeight: 700,
+                      ),
+                  child: ListView(children: images),
+                );
               },
-            ),
+            )),
           ],
         ),
       ),
